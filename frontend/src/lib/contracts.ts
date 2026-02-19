@@ -25,6 +25,12 @@ export const CHAIN_CONTRACTS: Record<
     poolSwapTest: "0x8b5bcc363dde2614281ad875bad385e0a785d3b9", // official Uniswap v4 deployment
     token: "0x3A3862df769f11fEa748f36B18751b7b7c755302", // deployed (DemoToken ERC20)
   },
+  // ── Unichain Sepolia (1301) ──────────────────────────────────────────────────
+  1301: {
+    pointsHook: "0x714B9A13741c4353034d1BB1Eba40856A73A4040", // deployed (CREATE2 via HookMiner)
+    poolSwapTest: "0x9140a78c1a137c7ff1c151ec8231272af78a99a4", // official Uniswap v4 deployment
+    token: "0x9c774Ba3c07D9526c0a658D1e6FE001D0E9fF1B7", // deployed (DemoToken ERC20)
+  },
 };
 
 export function getContracts(chainId: number) {
