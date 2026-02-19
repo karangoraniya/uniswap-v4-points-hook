@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { keccak256, encodeAbiParameters, formatEther } from 'viem'
-import { Trophy, Loader2, Info } from 'lucide-react'
+import { Trophy, Loader2, Info, Copy, Check } from 'lucide-react'
 
 import {
   Card,
@@ -43,6 +44,35 @@ function computePoolId(
 
 function truncate(hex: string, chars = 6) {
   return `${hex.slice(0, chars + 2)}...${hex.slice(-chars)}`
+}
+
+function CopyableAddress({ value, label }: { value: string; label: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = () => {
+    navigator.clipboard.writeText(value)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
+  return (
+    <div className="space-y-1">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <button
+        onClick={copy}
+        className="flex items-center gap-1.5 group w-full text-left"
+        title={value}
+      >
+        <span className="font-mono text-xs text-foreground/70 group-hover:text-foreground transition-colors break-all">
+          {truncate(value, 8)}
+        </span>
+        {copied
+          ? <Check className="h-3 w-3 text-green-500 shrink-0" />
+          : <Copy className="h-3 w-3 text-muted-foreground group-hover:text-foreground shrink-0 transition-colors" />
+        }
+      </button>
+    </div>
+  )
 }
 
 export function PointsCard() {
@@ -105,30 +135,16 @@ export function PointsCard() {
         <Separator />
 
         {/* Pool ID */}
-        <div className="space-y-1">
-          <p className="text-xs text-muted-foreground">Pool ID</p>
-          <p
-            className="font-mono text-xs text-foreground/70 break-all cursor-pointer hover:text-foreground transition-colors"
-            title={poolId?.bytes32}
-            onClick={() => poolId && navigator.clipboard.writeText(poolId.bytes32)}
-          >
-            {poolId ? truncate(poolId.bytes32, 8) : '—'}
-          </p>
-        </div>
+        {poolId
+          ? <CopyableAddress value={poolId.bytes32} label="Pool ID" />
+          : <div className="space-y-1"><p className="text-xs text-muted-foreground">Pool ID</p><p className="font-mono text-xs text-foreground/40">—</p></div>
+        }
 
         {/* Hook address */}
-        <div className="space-y-1">
-          <p className="text-xs text-muted-foreground">
-            Hook (ERC1155) address
-          </p>
-          <p
-            className="font-mono text-xs text-foreground/70 break-all cursor-pointer hover:text-foreground transition-colors"
-            title={contracts?.pointsHook}
-            onClick={() => contracts && navigator.clipboard.writeText(contracts.pointsHook)}
-          >
-            {contracts ? truncate(contracts.pointsHook, 8) : '—'}
-          </p>
-        </div>
+        {contracts
+          ? <CopyableAddress value={contracts.pointsHook} label="Hook (ERC1155) address" />
+          : <div className="space-y-1"><p className="text-xs text-muted-foreground">Hook (ERC1155) address</p><p className="font-mono text-xs text-foreground/40">—</p></div>
+        }
 
         <Separator />
 
