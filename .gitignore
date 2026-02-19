@@ -1,0 +1,22 @@
+# ── Foundry ──────────────────────────────────────────────────────────────────
+cache/
+out/
+
+# Keep real broadcast logs (deployment receipts), ignore local/dry-run only
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# ── Environment / secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.DS_Store
+
+# ── Frontend (Next.js) ───────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
