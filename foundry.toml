@@ -1,0 +1,23 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+solc_version = '0.8.26'
+evm_version = "cancun"
+optimizer_runs = 800
+via_ir = false
+ffi = true
+
+[rpc_endpoints]
+sepolia        = "${SEPOLIA_RPC_URL}"
+base_sepolia   = "${BASE_SEPOLIA_RPC_URL}"
+unichain_sep   = "${UNICHAIN_SEPOLIA_RPC_URL}"
+
+# Etherscan V2 API — one key covers all chains via chainid param
+[etherscan]
+sepolia      = { key = "${ETHERSCAN_API_KEY}", url = "https://api.etherscan.io/v2/api?chainid=11155111" }
+base_sepolia = { key = "${ETHERSCAN_API_KEY}", url = "https://api.etherscan.io/v2/api?chainid=84532" }
+unichain_sep = { key = "${ETHERSCAN_API_KEY}", url = "https://api.etherscan.io/v2/api?chainid=1301" }
